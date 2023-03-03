@@ -1,0 +1,103 @@
+
+.navbar {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+   min-height: 70px;
+  
+   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+     
+  }
+  .navbar li:hover{
+    background-color: rgb(217, 247, 255);
+  
+  }
+  
+  .brand-title {
+    margin-left: 1rem;
+    color: #000;
+  }
+  .navlinks {
+    flex: 1;
+  }
+  .nav-left {
+    display: flex;
+  }
+  .nav-right {
+    display: flex;
+  }
+  .navlinks ul {
+    display: flex;
+  
+    justify-content: space-between;
+  }
+  .navlinks li {
+    margin-left: 10px;
+    padding: 10px;
+  
+  }
+  .navlinks a {
+    text-decoration: none;
+    color: #000;
+  }
+  .navlinks li {
+    list-style: none;
+    color: #000;
+  }
+  
+  .menu-icon .icon {
+    display: none;
+    color: #000;
+  }
+  
+  @media (max-width: 737px) {
+    
+    .navbar,
+    .navlinks ul,
+    .nav-left,
+    .nav-right {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      
+    }
+    .navlinks ul{
+      justify-content: flex-start;
+      
+    }
+   
+    .brand-title {
+      position: absolute;
+      left: 3rem;
+      top: 1.5rem;
+      font-size: larger;
+    }
+   
+    .navlinks {
+      display: none; 
+      background-color: #333;
+      min-height: 100px;
+      width: 100%;  
+    }
+    .navlinks li{
+      color: #fff;
+    }
+    .navlinks a{
+      color: #fff;
+    }
+    .menu-icon .icon {
+      display: block;
+      position: absolute;
+      right: 1rem;
+      top: 1.5rem;
+      color: #000;
+      font-weight: bolder;
+      font-size: 25px;
+    } 
+    .active {
+      display: flex;
+
+      margin-top: 4rem;
+      min-height: 100%;  
+    } 
+  }
