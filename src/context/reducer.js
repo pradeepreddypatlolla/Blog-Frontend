@@ -1,9 +1,10 @@
-const user = localStorage.getItem("user")? JSON.stringify(localStorage.getItem('user')):""
+const user = localStorage.getItem("user")?JSON.parse(localStorage.getItem('user')):""
+const token = localStorage.getItem('token')?localStorage.getItem('token'):""
 export const initialState = {
     user : user,
     loading:false,
     errorMessage:"",
-    token:null
+    token:token
 }
 export  const AuthReducer = (initialState,action)=>{
     switch(action.type){

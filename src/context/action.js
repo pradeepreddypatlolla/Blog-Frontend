@@ -7,6 +7,7 @@ export const loginAction = async (dispatch,data)=>{
             method: 'POST', 
             headers: {
               'Content-Type': 'application/json',
+             
             },
             body:JSON.stringify(data)
           }
@@ -14,7 +15,9 @@ export const loginAction = async (dispatch,data)=>{
           let res = await fetch(URL+"user/login",reqOptions)
           res= await res.json()
           if(res.success){
-           dispatch({type:"LOGIN_SUCCESS",payload:{user:res.user,token:res.accessToken}})
+            localStorage.setItem('user',JSON.stringify(res.user))
+            localStorage.setItem('token',res.token)
+           dispatch({type:"LOGIN_SUCCESS",payload:{user:res.user,token:res.token}})
             
            return res.success
 

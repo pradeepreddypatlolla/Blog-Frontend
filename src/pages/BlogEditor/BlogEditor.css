@@ -1,0 +1,33 @@
+
+.editor-container{
+    
+    width: 90vw;
+    margin:auto;
+    margin-top:10px;
+   
+    
+}
+.editor{
+   
+    min-height: 60vh;
+    padding: 10px;
+}
+
+
+.title{
+    outline: none;
+    
+    height:3rem;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #333;
+}
+ .submit{
+    margin-top: 10px;
+   
+}
+.submit .btn{
+   padding: 8px 16px;
+}
