@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { URL } from "../../constants";
 import { registerAction } from "../../context/action";
 import { useAuthDispatch, useAuthState } from "../../context/context";
-
-
 const Register = () => {
   const [name, setName] = useState("");
   const [emailId, setEmailId] = useState("");
