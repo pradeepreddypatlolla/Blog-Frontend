@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { URL } from "../../constants";
 import { registerAction } from "../../context/action";
 import { useAuthDispatch, useAuthState } from "../../context/context";
-import Warning from "../../Warning/Warning";
+
 
 const Register = () => {
   const [name, setName] = useState("");

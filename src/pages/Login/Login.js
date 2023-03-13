@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { loginAction, loginSuccessAction } from '../../context/action'
 import { useAuthDispatch, useAuthState } from '../../context/context'
-
-const Login = (props) => {
+import './Login.css'
+const Login = () => {
     const navigate = useNavigate()
     const [emailId,setEmailId] = useState("")
     const [password,setPassword]=useState("")
@@ -34,11 +34,11 @@ const Login = (props) => {
         }
     }
   return (
-    <div>
+    <div className='login-main-container'>
         {errorMessage? <p> {errorMessage} </p>:"" }
-      <h1>Login Page</h1>
-      <div>
-        <div>
+      <h3>Login</h3>
+      <div className='login-content' >
+        <div className='login-inputs' >
            <div>
            Email Id : 
             </div> 
@@ -47,7 +47,7 @@ const Login = (props) => {
             </div>
         </div>
 
-        <div>
+        <div className='login-inputs'>
            <div>
            Password : 
             </div> 
@@ -55,8 +55,8 @@ const Login = (props) => {
                 <input type="password" name="password" onChange={handlePasswordChange} disabled={loading} />
             </div>
         </div>
-        <div>
-            <button type="submit" onClick={handleSubmit} disabled={loading} >Submit</button>
+        <div className='login-submit' >
+            <button className='btn' type="submit" onClick={handleSubmit} disabled={loading} >Submit</button>
         </div>
       </div>
     </div>

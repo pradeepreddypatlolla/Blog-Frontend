@@ -1,0 +1,7 @@
+@media (max-width:737px){
+    .section{
+       
+      flex-direction: column;
+        font-size: x-small;
+    }
+  }

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import './navbar.css'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { useAuthDispatch, useAuthState } from '../context/context'
 import { URL } from '../constants'
 const Navbar = () => {
@@ -8,11 +8,11 @@ const Navbar = () => {
     const userState = useAuthState()
     const dispatchState = useAuthDispatch()
     const handleMenuIconClick = ()=>{
-       if (activeRef.current.className==="navlinks active"){
+       if (activeRef.current.className==="navlinks active-icon"){
         activeRef.current.className="navlinks"
        }
        else{
-        activeRef.current.className="navlinks active"
+        activeRef.current.className="navlinks active-icon"
        }
     }
 
@@ -28,6 +28,9 @@ const Navbar = () => {
           
         })
         res=await res.json()
+        if(res.success){
+          localStorage.clear()
+        }
         console.log((res));
       } catch (error) {
         console.log(error.log);
@@ -38,40 +41,34 @@ const Navbar = () => {
     <div>
   <nav className="navbar">
       <div className="brand-title">
-        <Link to="/">Home </Link>
+        <NavLink  to="/">Home </NavLink>
       </div>
 
       <div ref={activeRef} className="navlinks">
         <ul>
           <div className="nav-left">
-            <li><Link to="/blogs/" >Blogs </Link> </li>
-            <li><Link to="/editor">Blog editor </Link> </li>
+            <li><NavLink  to="/blogs/" >Blogs </NavLink> </li>
+            <li><NavLink to="/editor/0">Blog editor </NavLink> </li>
           </div>
 
           {userState.user?<div  className="nav-right">
           <li  className="navitem mr-1">
-            <Link to="/user/profile" id="username">Username  </Link>
+            <NavLink to="/user/profile" >{userState.user.name}  </NavLink>
           </li>
           <li id="logout" className="navitem mr-1">
-            <button onClick={handleLogOut}>Logout </button>
+            <button className='btn' onClick={handleLogOut}>Logout </button>
           </li>
-        </div>:
-          <div  className="nav-right">
-          <li className="navitem mr-1"><Link to="/user/login">Login </Link> </li>
-          <li className="navitem mr-1"><Link to="/user/register">Register </Link> </li>
+        </div>: <div  className="nav-right">
+           
+          <li className="navitem mr-1"><NavLink  to="/user/login">Login </NavLink> </li>
+          <li className="navitem mr-1"><NavLink  to="/user/register">Register </NavLink> </li>
+         
         </div>
-
-
-          
-          }
-        
-          
-
-          
+          }  
         </ul>
       </div>
       <div id="menuicon" className="menu-icon">
-        <Link to="/" onClick={handleMenuIconClick} > <i className="fa fa-bars icon"></i></Link>
+        <NavLink  onClick={handleMenuIconClick} > <i className="fa fa-bars icon"></i></NavLink>
         
       </div>
     </nav>

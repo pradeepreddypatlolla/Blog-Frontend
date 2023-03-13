@@ -1,3 +1,3 @@
-const URL="https://blog-backend-1m5t.onrender.com/"
+const URL="http://localhost:4000/"
 
 module.exports={URL}
