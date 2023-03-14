@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { URL } from "../../constants";
 import { registerAction } from "../../context/action";
 import { useAuthDispatch, useAuthState } from "../../context/context";
+import './Register.css'
 const Register = () => {
   const [name, setName] = useState("");
   const [emailId, setEmailId] = useState("");
@@ -42,25 +43,25 @@ const handleReEnteredPasswordChange=(e)=>{
     }
   };
   return (
-    <div>
-       {errorMessage? <p>{errorMessage}</p>:"" }
-      <h1>Register Page</h1>
-      <div>
-        <div>
+    <div className="register-main-container">
+      
+      <h3>Create a New Account</h3>
+      <div className="register-content card">
+        <div className="register-inputs">
           <div>Name :</div>
 
           <div>
             <input type="text" name="name" onChange={handleNameChange} />
           </div>
         </div>
-        <div>
+        <div className="register-inputs">
           <div>Email Id :</div>
           <div>
             <input type="email" name="emailId" onChange={handleEmailChange} />
           </div>
         </div>
 
-        <div>
+        <div className="register-inputs">
           <div>Password :</div>
           <div>
             <input
@@ -71,7 +72,7 @@ const handleReEnteredPasswordChange=(e)=>{
           </div>
         </div>
 
-        <div>
+        <div className="register-inputs">
           <div>Re enter password :</div>
           <div>
             <input
@@ -82,11 +83,13 @@ const handleReEnteredPasswordChange=(e)=>{
           </div>
         </div>
 
-        <div>
-          <button type="submit" onClick={handleSubmit}>
+        <div className="register-submit">
+          <button className="btn" type="submit" onClick={handleSubmit}>
             Submit
           </button>
         </div>
+        <p >Existing User? <span > <Link style={{color:"blue"}}  to="/user/login" >Click Here to Login</Link> </span>   </p>
+        {errorMessage? <p style={{color:'red'}}> *{errorMessage}* </p>:"" }
       </div>
     </div>
   );

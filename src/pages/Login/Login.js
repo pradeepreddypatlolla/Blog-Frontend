@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { loginAction, loginSuccessAction } from '../../context/action'
 import { useAuthDispatch, useAuthState } from '../../context/context'
 import './Login.css'
@@ -23,7 +23,7 @@ const Login = () => {
         try {
 
           let isLoginSuccess = await loginAction(dispatch,{emailId,password})
-          alert(isLoginSuccess)
+         
           if(!isLoginSuccess)return
           navigate("/blogs")
          
@@ -35,9 +35,9 @@ const Login = () => {
     }
   return (
     <div className='login-main-container'>
-        {errorMessage? <p> {errorMessage} </p>:"" }
-      <h3>Login</h3>
-      <div className='login-content' >
+       
+      <h3>Welcome Back to BlogSpot</h3>
+      <div className='login-content card' >
         <div className='login-inputs' >
            <div>
            Email Id : 
@@ -57,7 +57,10 @@ const Login = () => {
         </div>
         <div className='login-submit' >
             <button className='btn' type="submit" onClick={handleSubmit} disabled={loading} >Submit</button>
+           
         </div>
+        <p style={{color:"blue"}}><Link to="/user/register" >Or Create a New Account </Link> </p>
+        {errorMessage? <p style={{color:'red'}}> *{errorMessage}* </p>:"" }
       </div>
     </div>
   )

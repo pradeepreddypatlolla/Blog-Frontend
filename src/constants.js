@@ -1,5 +1,5 @@
 
-const URL="https://blog-backend-9bu9.onrender.com/"
+const URL="http://localhost:4000/"
 
 
 module.exports={URL}

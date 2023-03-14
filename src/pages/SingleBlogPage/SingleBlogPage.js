@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
-import { useAuthState } from "../../context/context"
+import { useAuthDispatch, useAuthState } from "../../context/context"
 import { URL } from "../../constants"
 import "./SingleBlogPage.css"
 
@@ -8,12 +8,13 @@ const SingleBlogPage = () => {
   const [blog,setBlog] = useState()
   const {blogId} = useParams()
   const authState = useAuthState()
+  const dispatch = useAuthDispatch()
   useEffect(()=>{
     getBlog()
   },[])
   const getBlog = async()=>{
     try {
-     
+      dispatch({type:"REQUEST_INITIATED"})
        const reqOptions= {
             method: 'GET', // or 'PUT'
             headers: {
@@ -24,12 +25,19 @@ const SingleBlogPage = () => {
             
           }
           console.log(`${URL}blogs/${blogId}`);
-         let blog = await fetch(`${URL}blogs/${blogId}`,reqOptions)
-         blog = await blog.json()
-         setBlog(blog.blog)
-         console.log(blog.blog); 
+         let res = await fetch(`${URL}blogs/${blogId}`,reqOptions)
+         res = await res.json()
+         if(res.success){
+          setBlog(res.blog)
+          dispatch({type:"REQUEST_SUCCESS"})
+          
+         }
+         else{
+          dispatch({type:"REQUEST_FAIL",payload:res.message})
+         }
     } catch (error) {
        // console.log(error);
+       dispatch({type:"REQUEST_FAIL",payload:error.message})
     }
   }
   return (

@@ -11,7 +11,7 @@ export const loginAction = async (dispatch,data)=>{
             },
             body:JSON.stringify(data)
           }
-          dispatch({type:"LOGIN_REQUEST"})
+          dispatch({type:"REQUEST_INITIATED"})
           let res = await fetch(URL+"user/login",reqOptions)
           res= await res.json()
           if(res.success){
@@ -46,7 +46,7 @@ export const registerAction = async(dispatch,data)=>{
             },
             body:JSON.stringify(data)
           }
-          dispatch({type:"LOGIN_REQUEST"})
+          dispatch({type:"REQUEST_INITIATED"})
           let res = await fetch(URL+"user/register",reqOptions)
           res= await res.json()
           if(res.success){
@@ -68,6 +68,7 @@ export const registerAction = async(dispatch,data)=>{
     }
 
 }
+
 
 
 

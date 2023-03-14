@@ -17,9 +17,9 @@
     border-bottom: green 2px solid;
   } 
   .brand-title {
-    margin-left: 1rem;
-    
-    color: #000;
+    margin-left: 2rem;
+    font-weight: bold;
+    color: #003072;
   }
   .navlinks {
     flex: 1;
@@ -45,11 +45,12 @@
   }
   .navlinks a {
     text-decoration: none;
-    color: #000;
+    color: #356db7;
   }
   .navlinks li {
     list-style: none;
-    color: #000;
+    font-weight: bold;
+   
   }
   
   .menu-icon .icon {

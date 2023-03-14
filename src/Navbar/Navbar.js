@@ -48,7 +48,7 @@ const Navbar = () => {
         <ul>
           <div className="nav-left">
             <li><NavLink  to="/blogs/" >Blogs </NavLink> </li>
-            <li><NavLink to="/editor/0">Blog editor </NavLink> </li>
+            <li><NavLink to="/editor/0"> Editor </NavLink> </li>
           </div>
 
           {userState.user?<div  className="nav-right">

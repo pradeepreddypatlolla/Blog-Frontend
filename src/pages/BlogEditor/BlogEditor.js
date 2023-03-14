@@ -5,21 +5,22 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtmlPuri from "draftjs-to-html";
 import { URL as BASE_URL } from "../../constants";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAuthState } from "../../context/context";
-import { stateFromHTML } from 'draft-js-import-html'
+import { useAuthDispatch, useAuthState } from "../../context/context";
 import '../BlogEditor/BlogEditor.css'
 export default function BlogEditor() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [title,setTitle] = useState("")
-  const [content, setContent] = useState();
+  const [content, setContent] = useState("");
   const navigate = useNavigate()
   const authState = useAuthState()
+  const dispatch = useAuthDispatch()
   const {blogId} = useParams()
 
   useEffect(()=>{
     if(blogId==='0'){
       setEditorState(EditorState.createEmpty())
       setTitle("")
+      setContent("")
     }
   },[blogId])
 
@@ -93,42 +94,44 @@ export default function BlogEditor() {
 
   const getBlog = async()=>{
     try {
-     
+      dispatch({type:"REQUEST_INITIATED"})
        const reqOptions= {
             method: 'GET', // or 'PUT'
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${authState.token}`
-            },
-            
-            
+            },         
           }
-        
-         let blog = await fetch(`${BASE_URL}blogs/${blogId}`,reqOptions)
-         blog = await blog.json()
-      //  let x=`<h2>Hello Everyone!😀</h2>
-      //  <p>This is my first blog on this website.<span style="color: rgb(0,0,0);font-size: medium;font-family: Poppins, sans-serif;">Lets write a javascript code to print Hello World.Lets write a javascript code to print Hello World</span></p>
        
-      //  <p>Lets attach a image below.&nbsp;<span style="color: rgb(0,0,0);font-size: medium;font-family: Poppins, sans-serif;">Lets write a javascript code to print Hello World.Lets write a javascript code to print Hello World</span></p>
-      // <figure> <img src="http://res.cloudinary.com/dejp9aouq/image/upload/v1678550384/wgved6nsdt18lasstbhr.png" alt="undefined" style="height: undefined;width: undefined" > </figure>
-      //  <p>Conclusion:</p>
-      //  <p>It is working!</p>`
-      console.log(blog.blog.content);
-        const blocksFromHTML = convertFromHTML(blog.blog.content);
-        
-        //const x = (blog.blog.content)
-        console.log(blocksFromHTML);
-        console.log("block from HTML",blocksFromHTML);
-          const state = ContentState.createFromBlockArray(
-            blocksFromHTML.contentBlocks,
-            blocksFromHTML.entityMap,
-          );
+         let res = await fetch(`${BASE_URL}blogs/${blogId}`,reqOptions)
 
-       setEditorState(EditorState.createWithContent(state,decorator))
-       setTitle(blog.blog.title)
-        
+         if(res.status===200){
+          res = await res.json()
+          const blocksFromHTML = convertFromHTML(res.blog.content);
+            const state = ContentState.createFromBlockArray(
+              blocksFromHTML.contentBlocks,
+              blocksFromHTML.entityMap,
+            );
+         setEditorState(EditorState.createWithContent(state,decorator))
+         setTitle(res.blog.title)
+         setContent(res.blog.content)
+          dispatch({type:'REQUEST_SUCCESS'})
+         }
+
+         else{
+
+          if(res.status===401){
+            dispatch({type:"REQUEST_FAIL",payload:res.message})
+            localStorage.clear()
+            sessionStorage.clear()
+            dispatch({type:"CLEAR_STATE"})
+            navigate("/user/login")
+          }
+         }
+
+         
     } catch (error) {
-      
+      dispatch({type:"REQUEST_FAIL",payload:error.message})
     }
   }
 
@@ -145,72 +148,85 @@ export default function BlogEditor() {
   };
 
   const submitBlog=async()=>{
-    let blog = `<div id='content'> ${content} </div> `
-    const parser = new DOMParser()
-  blog = parser.parseFromString(blog, 'text/html')
-
-  blog = blog.getElementById('content')
+    try {
+      dispatch({type:'REQUEST_INITIATED'})
+      let blog = `<div id='content'> ${content} </div> `
+      const parser = new DOMParser()
+    blog = parser.parseFromString(blog, 'text/html')
   
-  let blogTitle=title
- 
-  let imgs = blog.getElementsByTagName('img');
-  
-  let imgUrls=[]
-  for (let i = 0; i < imgs.length; i++) {
-
+    blog = blog.getElementById('content')
+    
+    let blogTitle=title
    
+    let imgs = blog.getElementsByTagName('img');
     
-    let res = await fetch(BASE_URL+"blogs/uploadPhoto", {
-      method: "POST",
-      body: JSON.stringify({data: imgs[i].src}),
-      headers:{
-        'Content-type':'application/json',
-        'Authorization': `Bearer ${authState.token}`
-    
+    let imgUrls=[]
+    for (let i = 0; i < imgs.length; i++) {
+  
+     
+      
+      let res = await fetch(BASE_URL+"blogs/uploadPhoto", {
+        method: "POST",
+        body: JSON.stringify({data: imgs[i].src}),
+        headers:{
+          'Content-type':'application/json',
+          'Authorization': `Bearer ${authState.token}`
+      
+      }
+      });
+     
+  
+      
+      res = await res.json();
+      
+      imgs[i].src = res.url;
+      imgUrls.push(res.url)
+      let imgWithFigure = document.createElement('div')
+      
+       imgWithFigure.innerHTML=`<figure> <img src="${imgs[i].src}" >  </figure>`
+      
+      blog.replaceChild(imgWithFigure,imgs[i])
     }
-    });
-   
-
-    
-    res = await res.json();
-    
-    imgs[i].src = res.url;
-    imgUrls.push(res.url)
-    let imgWithFigure = document.createElement('div')
-    
-     imgWithFigure.innerHTML=`<figure> <img src="${imgs[i].src}" >  </figure>`
-    
-    blog.replaceChild(imgWithFigure,imgs[i])
-  }
-  let url=BASE_URL+"blogs/submit"
-  let reqOptions= {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      'Authorization': `Bearer ${authState.token}`
-    },
-    body: JSON.stringify({title:blogTitle,content: blog.innerHTML,imgUrls:imgUrls} ),
-  }
-  if(blogId!="0"){
-   
-    url=BASE_URL+"blogs/update-blog"
-    reqOptions= {
+    let url=BASE_URL+"blogs/submit"
+    let reqOptions= {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         'Authorization': `Bearer ${authState.token}`
       },
-      body: JSON.stringify({blogId:blogId,title:blogTitle,content: blog.innerHTML,imgUrls:imgUrls} ),
+      body: JSON.stringify({title:blogTitle,content: blog.innerHTML,imgUrls:imgUrls} ),
     }
-  }
-  console.log("blog",blog);
-  let res = await fetch(url,reqOptions);
-  res = await res.json();
-  if(res.success){
-    alert("Submitted successfully!")
-    navigate("/blogs")
+    if(blogId!="0"){
+     
+      url=BASE_URL+"blogs/update-blog"
+      reqOptions= {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${authState.token}`
+        },
+        body: JSON.stringify({blogId:blogId,title:blogTitle,content: blog.innerHTML,imgUrls:imgUrls} ),
+      }
+    }
     
-  }
+    let res = await fetch(url,reqOptions);
+    res = await res.json();
+    if(res.success){
+      dispatch({type:'BLOG_SUBMIT_SUCCESS'})
+      alert("Submitted successfully!")
+      navigate("/blogs")
+      
+    }
+    else{
+      dispatch({type:'BLOG_SUBMIT_FAIL'})
+      alert("Failed to Submit Blog due to "+res.message)
+    }
+      
+    } catch (error) {
+      dispatch({type:'BLOG_SUBMIT_FAIL'})
+      alert("Failed to Submit Blog due to "+error.message)
+    }
+   
   }
 
  async function imageUploadCallback (file) {
