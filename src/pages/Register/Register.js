@@ -31,7 +31,7 @@ const handleReEnteredPasswordChange=(e)=>{
         dispatch({type:"RE_ENTERED_PASSWORD_MISSMATCH"})
         return
     }
-    console.log(URL);
+    
     try {
       let isRegistrationSuccess = await registerAction(dispatch,{name,emailId,password})
       if(!isRegistrationSuccess) return
@@ -39,7 +39,7 @@ const handleReEnteredPasswordChange=(e)=>{
       navigate("/blogs")
       
     } catch (error) {
-       console.log(error);
+       
     }
   };
   return (
