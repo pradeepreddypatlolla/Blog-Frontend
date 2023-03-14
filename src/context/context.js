@@ -6,7 +6,7 @@ const AuthDispatchContext = createContext()
 
 export const useAuthState = ()=>{
     const context = useContext(AuthStateContext)
-    console.log("Auth State Context - ",context);
+  //  console.log("Auth State Context - ",context);
     if(context ===undefined){
        throw new Error("useAuthState must be used in AuthProvider")
     }
@@ -15,7 +15,7 @@ export const useAuthState = ()=>{
 
 export const useAuthDispatch =()=>{
     const context = useContext(AuthDispatchContext)
-    console.log("Auth dispatch Context - ",context);
+   // console.log("Auth dispatch Context - ",context);
     if(context ===undefined){
        throw new Error("useAuthDispatch must be used in AuthProvider")
     }

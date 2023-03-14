@@ -51,7 +51,7 @@ const ProfilePage = () => {
     }
   return (
     <div>
-        <div className='subnav'> <Link>Home/</Link> <Link>Profile</Link> </div>
+        <div className='subnav'> <Link>Home</Link> {"/"} <Link>Profile</Link> </div>
       <h2 className='blog-count'>Blogs - {blogs.length} </h2>
  { blogs&& blogs.map((blog,i)=>{
         return <div key={i}>

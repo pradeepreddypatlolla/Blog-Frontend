@@ -21,6 +21,10 @@
     font-weight: bold;
     color: #003072;
   }
+  .brand-title a{
+    text-decoration: none;
+    color: inherit;
+}
   .navlinks {
     flex: 1;
   }
@@ -37,6 +41,7 @@
     margin-top: auto;
     justify-content: space-between;
   }
+
   .navlinks li {
     
     margin-left: 20px;
