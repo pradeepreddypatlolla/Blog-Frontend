@@ -21,10 +21,10 @@
     font-weight: bold;
     color: #003072;
   }
-  .brand-title a{
+  .brand-title  a {
     text-decoration: none;
     color: inherit;
-}
+  }
   .navlinks {
     flex: 1;
   }
@@ -81,7 +81,7 @@
    
     .brand-title {
        position: absolute; 
-       left: 3rem;
+       left: 2rem;
       top: 1.5rem;
       font-size: larger; 
     }

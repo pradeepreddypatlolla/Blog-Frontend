@@ -1,7 +1,7 @@
 
 import './App.css';
 import Navbar from './Navbar/Navbar';
-import {  Route,Routes } from 'react-router-dom';
+import {  Outlet, Route,Routes } from 'react-router-dom';
 
 import Home from './pages/Home/Home'
 
@@ -13,13 +13,14 @@ import BlogEditor from './pages/BlogEditor/BlogEditor';
 import SingleBlogPage from './pages/SingleBlogPage/SingleBlogPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import Loader from './components/Loader/Loader';
+import Footer from './components/Footer/Footer';
 function App() {
   return (
-   <div>
+   <div className='app'>
     <Loader/>
     <Navbar/>
 
-
+    <div className='main' >
     <Routes>
 
     <Route exact path='/' element ={<Home/>}  />
@@ -33,7 +34,8 @@ function App() {
 
     <Route path="/user/register" element={<Register/>} />
     </Routes>
-
+   </div> 
+    <Footer/>
    </div>
   );
 }

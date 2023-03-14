@@ -41,7 +41,7 @@ const Navbar = () => {
     <div>
   <nav className="navbar">
       <div className="brand-title">
-        <NavLink  to="/">Home </NavLink>
+        <NavLink  to="/"> blogIn . </NavLink>
       </div>
 
       <div ref={activeRef} className="navlinks">
