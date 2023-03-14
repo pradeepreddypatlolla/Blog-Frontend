@@ -13,7 +13,7 @@ export  const AuthReducer = (initialState,action)=>{
         case 'REQUEST_INITIATED':
             return {...initialState,loading:true}
         case 'LOGIN_SUCCESS':
-            console.log("initial State - " ,initialState);
+           
             return {...initialState,user:action.payload.user,loading:false,errorMessage:"",token:action.payload.token}
         case 'LOGIN_FAIL':
             return {...initialState,errorMessage:action.payload,loading:false}

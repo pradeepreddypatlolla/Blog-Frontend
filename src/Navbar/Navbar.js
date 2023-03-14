@@ -19,7 +19,7 @@ const Navbar = () => {
     const handleLogOut = async()=>{
       dispatchState({type:"LOGOUT"})
       try {
-        console.log();
+       
        let res= await fetch(`${URL}user/logout` ,{
           method: 'GET', 
           headers: {
@@ -31,9 +31,9 @@ const Navbar = () => {
         if(res.success){
           localStorage.clear()
         }
-        console.log((res));
+       
       } catch (error) {
-        console.log(error.log);
+       
       }
       
     }

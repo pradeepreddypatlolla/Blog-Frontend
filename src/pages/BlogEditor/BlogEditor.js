@@ -143,7 +143,7 @@ export default function BlogEditor() {
     const htmlPuri = draftToHtmlPuri(
       convertToRaw(editorState.getCurrentContent())
     );
-      console.log(htmlPuri);
+     
    setContent(htmlPuri)
   };
 
