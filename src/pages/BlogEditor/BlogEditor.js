@@ -25,7 +25,7 @@ export default function BlogEditor() {
   },[blogId])
 
   const findImageEntities=(contentBlock, callback, contentState)=> {
-    console.log("findImageEntities",contentBlock);
+   
     contentBlock.findEntityRanges(
       (character) => {
         const entityKey = character.getEntity();
@@ -39,13 +39,13 @@ export default function BlogEditor() {
   }
 
   const Image = (props) => {
-    console.log("IMAGE");
+  
     const {
       height,
       src,
       width,
     } = props.contentState.getEntity(props.entityKey).getData();
-    console.log(props.contentState.getEntity(props.entityKey).getData());
+  
     return (
       <img src={src} height={height} width={width} />
     );
@@ -143,7 +143,7 @@ export default function BlogEditor() {
     const htmlPuri = draftToHtmlPuri(
       convertToRaw(editorState.getCurrentContent())
     );
- 
+      console.log(htmlPuri);
    setContent(htmlPuri)
   };
 

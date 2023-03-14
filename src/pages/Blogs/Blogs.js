@@ -54,7 +54,7 @@ const Blogs = () => {
     }
   return (
     <div className='blogs-main-container'>
-      <div className='subnav'> <Link to="/">Home/</Link> <Link to="/blogs">Blogs</Link> </div>
+      <div className='subnav'> <Link to="/">Home</Link> / <Link to="/blogs">Blogs</Link> </div>
       <h2 className='blog-count'>Blogs - {blogs.length} </h2>
       { blogs&& blogs.map((blog,i)=>{
         return <div key={i}>
