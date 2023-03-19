@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom"
 import { useAuthDispatch, useAuthState } from "../../context/context"
 import { URL } from "../../constants"
 import "./SingleBlogPage.css"
+import Comments from "../../components/Comments/Comments"
 const HtmlToReactParser = require('html-to-react').Parser;
 const SingleBlogPage = () => {
   const [blog,setBlog] = useState()
@@ -49,9 +50,17 @@ const SingleBlogPage = () => {
       <div > <Link to="/">Home</Link> / <Link to='/blogs'>Blogs</Link> /{blog.title.substring(0,30)}  </div> 
       <h1>{  blog.title}</h1>
       <br />
-    
+    <div>
+
      { htmlToReactParser.parse(blog.content)}
-     
+    </div>
+    <br />
+    <br />
+    <hr />
+    <br />
+     <div>
+       <Comments blog={blog} />
+     </div>
     </div>
   }
    </>
