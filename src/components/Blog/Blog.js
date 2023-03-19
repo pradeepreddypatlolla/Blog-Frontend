@@ -11,7 +11,7 @@ const Blog = (props) => {
     <div className='blog-container card'>
   
     <div className='blog' >
-      
+      <div> {props.blog.updatedAt.substring(0,10)} </div>
      <div> <h2>{props.blog.title}</h2></div> 
 
     

@@ -38,6 +38,7 @@ const BlogWithIcon = (props) => {
   
     <div className='blog' >
        {/* <div dangerouslySetInnerHTML={{ __html: props.blog.content }} /> */}
+       <div> {props.blog.updatedAt.substring(0,10)} </div>
      <div className='blog-heading' > <h2>{props.blog.title}</h2><div className='edit-delete'>  <span> <i className='fa fa-trash' onClick={deleteBlog} ></i> </span>  <span> <i className='fa fa-edit' onClick={editBlog} ></i> </span> </div> </div>  
      {/* <div className='thumbnail'>{props.blog.imgUrls.length? <img src={`${props.blog.imgUrls[0]}`} alt="" />:""} </div>  */}
 
